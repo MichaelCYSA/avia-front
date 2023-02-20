@@ -1,1 +1,1 @@
-export const formDefaultValues = { maxResults: 10 };
+export const formDefaultValues = { maxResults: '10' };
