@@ -17,17 +17,11 @@ function App() {
   };
 
   return (
-    <Box
-      display={'flex'}
-      width={1}
-      height={'100vh'}
-      pt={10}
-      pl={2}
-      pr={2}
-      justifyContent={'center'}
-    >
+    <Box display={'flex'} width={1} height={'100vh'} pt={10} justifyContent={'center'}>
       <Box
         maxWidth={'800px'}
+        pl={2}
+        pr={2}
         width={{
           xss: '100%',
           md: '50%'
