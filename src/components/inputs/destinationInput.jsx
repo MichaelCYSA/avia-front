@@ -28,10 +28,10 @@ const DestinationsInput = ({ setValue, control, register, watch, name, oneWay })
     const handleDate = (fieldName) => (e) => setValue(fieldName, moment(e.target.value).format('YYYY-MM-DD'))
 
     useEffect(() => {
-        if (watch(name)?.length === 0) {
+        if (fields?.length === 0) {
             appendNewFields()
         }
-    }, [watch(name)]);
+    }, [fields]);
 
     return (
         <Box display={'flex'} gap={2} flexDirection={'column'}>
