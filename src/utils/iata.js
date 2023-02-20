@@ -6,13 +6,16 @@ export const parse = (data) => {
   const findClassBySegmentId = (id) =>
     segmentPriceDetails.find((segment) => segment.id === id)?.class;
   const segmentsArray = itineraries
-    .map(({ segments }, index) => {
+    .map(({ segments }) => {
       return segments.map((segment) => {
-        segment.flightNumber = index + 1;
         return segment;
       });
     })
-    .flat();
+    .flat()
+    .map((segment, index) => {
+      segment.flightNumber = index + 1;
+      return segment;
+    });
 
   const iata = segmentsArray.map((segment) => {
     const departureTime = moment(segment.departure.at).format('hmmA').split('M').join('');
