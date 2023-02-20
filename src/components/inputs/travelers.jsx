@@ -1,4 +1,5 @@
 import { Box, Button } from '@mui/material';
+import { useEffect } from 'react';
 import { useFieldArray } from 'react-hook-form';
 
 import { travelerTypes } from '../../constants/selectOptions';
@@ -14,6 +15,12 @@ const Travelers = ({ control, name }) => {
     const appendField = () => append({ travelerType: '' })
     const removeField = (id) => () => remove(id)
 
+    useEffect(() => {
+        if (fields?.length === 0) {
+            appendField()
+        }
+    }, [fields]);
+
     return (
         <Box display={'flex'} flexDirection={'column'} gap={2}>
             {
@@ -25,7 +32,7 @@ const Travelers = ({ control, name }) => {
                             label={'Traveler type'}
                             control={control}
                         />
-                        <Button onClick={removeField(index)} variant='error' sx={{ width: 60 }}>Remove</Button>
+                        <Button onClick={removeField(index)} color='error' sx={{ width: 85 }}>Remove</Button>
                     </Box>
                 ))
             }<Box>

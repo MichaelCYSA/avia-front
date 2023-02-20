@@ -1,7 +1,8 @@
+import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Button, TextField } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
-import { handleFetch } from '../hooks/useFetch';
+import { useHandleFetch } from '../hooks/useFetch';
 import { mutateRequestData } from '../utils/mutateRequestData';
 import DestinationsInput from './inputs/destinationInput';
 import Travelers from './inputs/travelers';
@@ -9,9 +10,7 @@ import Travelers from './inputs/travelers';
 const MultiCity = ({ setData, setError }) => {
     const { handleSubmit, control, register, reset, setValue, watch } = useForm()
 
-
-
-
+    const { handleFetch, isLoading } = useHandleFetch()
 
     const handleSearch = async (data) => {
         const mutatedData = mutateRequestData(data)
@@ -44,7 +43,7 @@ const MultiCity = ({ setData, setError }) => {
                 control={control}
                 name={'travelers'}
             />
-            <Box display={'flex'} gap={3}><Button variant={'contained'} type={'submit'}>Search</Button><Button variant={'contained'} color={'error'} onClick={clear}>Clear</Button></Box>
+            <Box display={'flex'} gap={3}><LoadingButton loading={isLoading} variant={'contained'} type={'submit'}>Search</LoadingButton><Button variant={'contained'} color={'error'} onClick={clear}>Clear</Button></Box>
         </Box>
     )
 }

@@ -1,9 +1,10 @@
+import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Button, TextField } from '@mui/material';
 import moment from 'moment';
 import { useForm } from 'react-hook-form';
 
 import { cabins } from '../constants/selectOptions';
-import { handleFetch } from '../hooks/useFetch';
+import { useHandleFetch } from '../hooks/useFetch';
 import ControllableSelect from './inputs/controllableSelect';
 
 const defaultValues = {
@@ -14,6 +15,8 @@ const defaultValues = {
 
 const RoundTrip = ({ setData, setError }) => {
     const { handleSubmit, control, register, reset, setValue, watch } = useForm({ defaultValues: defaultValues })
+
+    const { handleFetch, isLoading } = useHandleFetch()
 
 
     const handleDate = (fieldName) => (e) => setValue(fieldName, moment(e.target.value).format('YYYY-MM-DD'))
@@ -70,7 +73,7 @@ const RoundTrip = ({ setData, setError }) => {
                 <TextField type={'number'} label={'Children'} {...register('children', { valueAsNumber: true })} fullWidth />
                 <TextField type={'number'} label={'Infants'} {...register('infants', { valueAsNumber: true })} fullWidth />
             </Box>
-            <Box display={'flex'} gap={3}><Button variant={'contained'} type={'submit'}>Search</Button><Button variant={'contained'} color={'error'} onClick={clear}>Clear</Button></Box>
+            <Box display={'flex'} gap={3}><LoadingButton loading={isLoading} variant={'contained'} type={'submit'}>Search</LoadingButton><Button variant={'contained'} color={'error'} onClick={clear}>Clear</Button></Box>
         </Box>
     )
 }
