@@ -83,10 +83,6 @@ export const pages = [
   {
     label: '250 Results',
     value: '250'
-  },
-  {
-    label: '1000 Results',
-    value: '1000'
   }
 ];
 
