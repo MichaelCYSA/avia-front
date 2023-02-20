@@ -3,7 +3,7 @@ import { Box, Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
 import { formDefaultValues } from '../constants/formDafaultValues';
-import { pages } from '../constants/selectOptions';
+import { maxNumberOfConnectionsOptions, pages } from '../constants/selectOptions';
 import { useHandleFetch } from '../hooks/useFetch';
 import { mutateRequestData } from '../utils/mutateRequestData';
 import ControllableSelect from './inputs/controllableSelect';
@@ -20,8 +20,11 @@ const MultiCity = ({ setData, setError }) => {
         const mutatedData = mutateRequestData(data)
         const res = await handleFetch({ data: mutatedData, method: 'post', path: 'one-way' })
         if (res) {
-            if (res.data)
+            if (res.data) {
+                setError(null)
                 return setData(res.data)
+            }
+
         }
         setData(null)
         setError(res.error?.response?.body || 'Error')
@@ -30,6 +33,7 @@ const MultiCity = ({ setData, setError }) => {
     const clear = () => {
         reset(formDefaultValues)
         setData([])
+        setError(null)
     }
 
 
@@ -50,12 +54,20 @@ const MultiCity = ({ setData, setError }) => {
                 control={control}
                 name={'travelers'}
             />
-            <ControllableSelect
-                name={'maxResults'}
-                control={control}
-                options={pages}
-                label={'Max Results'}
-            />
+            <Box display={'flex'} gap={2}>
+                <ControllableSelect
+                    name={'maxNumberOfConnections'}
+                    options={maxNumberOfConnectionsOptions}
+                    control={control}
+                    label={'Max Number Of Connections'}
+                />
+                <ControllableSelect
+                    name={'maxResults'}
+                    control={control}
+                    options={pages}
+                    label={'Max Results'}
+                />
+            </Box>
             <Box display={'flex'} gap={3}><LoadingButton loading={isLoading} variant={'contained'} type={'submit'}>Search</LoadingButton><Button variant={'contained'} color={'error'} onClick={clear}>Clear</Button></Box>
         </Box>
     )

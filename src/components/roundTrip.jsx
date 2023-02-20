@@ -28,16 +28,20 @@ const RoundTrip = ({ setData, setError }) => {
         data.travelers = data.travelers?.map((traveler, index) => ({ ...traveler, id: (index + 1).toString() }))
         const res = await handleFetch({ data, method: 'post', path: 'round-trip' })
         if (res) {
-            if (res.data)
+            if (res.data) {
+                setError(null)
                 return setData(res.data)
+            }
         }
         setData(null)
         setError(res.error?.response?.body || 'Error')
+
     }
 
     const clear = () => {
         reset(defaultValues)
         setData([])
+        setError(null)
     }
 
     return (

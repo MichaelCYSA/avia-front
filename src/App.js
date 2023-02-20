@@ -70,6 +70,19 @@ function App() {
               </Paper>
             );
           })}
+          <Box mt={4} display={'flex'} justifyContent={'center'}>
+            {error ? (
+              <Typography sx={{ color: 'red', fontSize: '14px', textAlign: 'center' }}>
+                {error}
+              </Typography>
+            ) : data && !data.length ? (
+              <Typography sx={{ fontSize: 14, fontWeight: 600 }}>
+                Not found results , type other reuqest !
+              </Typography>
+            ) : (
+              <></>
+            )}
+          </Box>
         </Box>
       </Box>
     </Box>
