@@ -3,14 +3,17 @@ import { Box, Button, TextField } from '@mui/material';
 import moment from 'moment';
 import { useForm } from 'react-hook-form';
 
-import { cabins } from '../constants/selectOptions';
+import { formDefaultValues } from '../constants/formDafaultValues';
+import { cabins, pages } from '../constants/selectOptions';
 import { useHandleFetch } from '../hooks/useFetch';
 import ControllableSelect from './inputs/controllableSelect';
+import OnlyUpperCaseTextField from './inputs/onlyUpperCaseTextField';
 
 const defaultValues = {
     adults: 0,
     children: 0,
-    infants: 0
+    infants: 0,
+    ...formDefaultValues
 }
 
 const RoundTrip = ({ setData, setError }) => {
@@ -39,10 +42,20 @@ const RoundTrip = ({ setData, setError }) => {
 
     return (
         <Box component={'form'} onSubmit={handleSubmit(handleSearch)} display={'flex'} gap={2} flexDirection={'column'}>
-            <TextField label={'Currency'} {...register('currencyCode')} fullWidth />
+            <OnlyUpperCaseTextField
+                label={'Currency'}
+                register={register('currencyCode')}
+            />
             <Box display={'flex'} gap={2}>
-                <TextField label={'Departing from'} {...register('originLocationCode')} fullWidth />
-                <TextField label={'Destination to'} {...register('destinationLocationCode')} fullWidth />
+                <OnlyUpperCaseTextField
+                    label={'Departing from'}
+                    register={register('originLocationCode')}
+                />
+                <OnlyUpperCaseTextField
+                    label={'Destination to'}
+                    register={register('destinationLocationCode')}
+
+                />
             </Box>
             <Box display={'flex'} gap={2}>
                 <TextField
@@ -73,6 +86,12 @@ const RoundTrip = ({ setData, setError }) => {
                 <TextField type={'number'} label={'Children'} {...register('children', { valueAsNumber: true })} fullWidth />
                 <TextField type={'number'} label={'Infants'} {...register('infants', { valueAsNumber: true })} fullWidth />
             </Box>
+            <ControllableSelect
+                name={'maxResults'}
+                control={control}
+                options={pages}
+                label={'Max Results'}
+            />
             <Box display={'flex'} gap={3}><LoadingButton loading={isLoading} variant={'contained'} type={'submit'}>Search</LoadingButton><Button variant={'contained'} color={'error'} onClick={clear}>Clear</Button></Box>
         </Box>
     )

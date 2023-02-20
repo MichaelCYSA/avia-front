@@ -1,14 +1,18 @@
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
+import { formDefaultValues } from '../constants/formDafaultValues';
+import { pages } from '../constants/selectOptions';
 import { useHandleFetch } from '../hooks/useFetch';
 import { mutateRequestData } from '../utils/mutateRequestData';
+import ControllableSelect from './inputs/controllableSelect';
 import DestinationsInput from './inputs/destinationInput';
+import OnlyUpperCaseTextField from './inputs/onlyUpperCaseTextField';
 import Travelers from './inputs/travelers';
 
 const OneWay = ({ setData, setError }) => {
-  const { handleSubmit, control, register, reset, setValue, watch } = useForm()
+  const { handleSubmit, control, register, reset, setValue, watch } = useForm({ defaultValues: formDefaultValues })
 
   const { handleFetch, isLoading } = useHandleFetch()
 
@@ -24,13 +28,16 @@ const OneWay = ({ setData, setError }) => {
   }
 
   const clear = () => {
-    reset()
+    reset(formDefaultValues)
     setData([])
   }
 
   return (
     <Box component={'form'} onSubmit={handleSubmit(handleSearch)} display={'flex'} gap={2} flexDirection={'column'}>
-      <TextField label={'Currency'} {...register('currencyCode')} fullWidth />
+      <OnlyUpperCaseTextField
+        label={'Currency'}
+        register={register('currencyCode')}
+      />
       <DestinationsInput
         setValue={setValue}
         control={control}
@@ -42,6 +49,12 @@ const OneWay = ({ setData, setError }) => {
       <Travelers
         control={control}
         name={'travelers'}
+      />
+      <ControllableSelect
+        name={'maxResults'}
+        control={control}
+        options={pages}
+        label={'Max Results'}
       />
       <Box display={'flex'} gap={3}><LoadingButton loading={isLoading} variant={'contained'} type={'submit'}>Search</LoadingButton><Button variant={'contained'} color={'error'} onClick={clear}>Clear</Button></Box>
     </Box>

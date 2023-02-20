@@ -5,6 +5,7 @@ import { useFieldArray } from 'react-hook-form';
 
 import { cabins as cabinsSelectOptions, dateWindow } from '../../constants/selectOptions';
 import ControllableSelect from './controllableSelect';
+import OnlyUpperCaseTextField from './onlyUpperCaseTextField';
 
 
 const DestinationsInput = ({ setValue, control, register, watch, name, oneWay }) => {
@@ -44,8 +45,14 @@ const DestinationsInput = ({ setValue, control, register, watch, name, oneWay })
                         )
                     }
                     <Box display={'flex'} gap={2}>
-                        <TextField disabled={index > 0} label={'Departing from'} {...register(`${name}.${index}.originLocationCode`)} fullWidth />
-                        <TextField label={'Destination'} {...register(`${name}.${index}.destinationLocationCode`)} fullWidth />
+                        <OnlyUpperCaseTextField
+                            label={'Departing from'}
+                            register={register(`${name}.${index}.originLocationCode`)}
+                        />
+                        <OnlyUpperCaseTextField
+                            label={'Destination'}
+                            register={register(`${name}.${index}.destinationLocationCode`)}
+                        />
                     </Box>
                     <Box display={'flex'} gap={2}>
                         <TextField
