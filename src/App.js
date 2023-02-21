@@ -53,9 +53,7 @@ function App() {
                 </Box>
                 <Divider />
                 <Box display={'flex'} flexDirection={'column'} gap={1} p={1}>
-                  {parse(flight)?.map((iata, index) => {
-                    return <Iata iataText={iata} key={index + iata} />;
-                  })}
+                  <Iata flight={parse(flight)} />;
                 </Box>
               </Paper>
             );
@@ -81,16 +79,30 @@ function App() {
 
 export default App;
 
-const Iata = ({ iataText }) => {
+const Iata = ({ flight }) => {
   function handleCopyClick() {
-    navigator.clipboard.writeText(iataText);
+    navigator.clipboard.writeText(
+      flight.join(
+        `
+        `
+      )
+    );
   }
+
   return (
-    <Box display={'flex'} gap={4} alignItems={'center'}>
-      <Typography sx={{ fontSize: 14 }}>{iataText}</Typography>
-      <Button onClick={handleCopyClick} variant='outlined'>
-        Copy
-      </Button>
+    <Box display={'flex'} gap={2} flexDirection={'column'}>
+      <Box display={'flex'} justifyContent={'flex-end'}>
+        <Button height={'30px'} onClick={handleCopyClick} variant='outlined'>
+          Copy
+        </Button>
+      </Box>
+      {flight.map((iata, index) => {
+        return (
+          <Typography key={iata + index} sx={{ fontSize: 14 }}>
+            {iata}
+          </Typography>
+        );
+      })}
     </Box>
   );
 };
