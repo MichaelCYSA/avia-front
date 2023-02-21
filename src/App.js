@@ -80,14 +80,17 @@ function App() {
 export default App;
 
 const Iata = ({ flight }) => {
-  function handleCopyClick() {
-    navigator.clipboard.writeText(
-      flight.join(
-        `
-        `
-      )
+  const handleCopyClick = () => {
+    const textArea = document.createElement('textarea');
+    textArea.value = flight.join(
+      `
+      `
     );
-  }
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+  };
 
   return (
     <Box display={'flex'} gap={2} flexDirection={'column'}>
