@@ -1,4 +1,4 @@
-import { Box, Divider, Paper, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Button, Divider, Paper, Tab, Tabs, Typography } from '@mui/material';
 import { useState } from 'react';
 
 import MultiCity from './components/multiCity';
@@ -45,20 +45,16 @@ function App() {
           {data?.map((flight, index) => {
             return (
               <Paper key={index} display={'flex'} flexDirection={'column'} gap={2}>
-                <Box display={'flex'} gap={2}>
+                <Box display={'flex'} gap={2} p={1}>
                   <Typography sx={{ fontSize: 16, fontWeight: 700 }}>Price: </Typography>
                   <Typography sx={{ fontSize: 16 }}>
                     {flight.price.total} {flight.price.currency}
                   </Typography>
                 </Box>
                 <Divider />
-                <Box display={'flex'} flexDirection={'column'}>
+                <Box display={'flex'} flexDirection={'column'} gap={1} p={1}>
                   {parse(flight)?.map((iata, index) => {
-                    return (
-                      <Typography sx={{ fontSize: 14 }} key={index}>
-                        {iata}
-                      </Typography>
-                    );
+                    return <Iata iataText={iata} key={index + iata} />;
                   })}
                 </Box>
               </Paper>
@@ -84,3 +80,17 @@ function App() {
 }
 
 export default App;
+
+const Iata = ({ iataText }) => {
+  function handleCopyClick() {
+    navigator.clipboard.writeText(iataText);
+  }
+  return (
+    <Box display={'flex'} gap={4} alignItems={'center'}>
+      <Typography sx={{ fontSize: 14 }}>{iataText}</Typography>
+      <Button onClick={handleCopyClick} variant='outlined'>
+        Copy
+      </Button>
+    </Box>
+  );
+};

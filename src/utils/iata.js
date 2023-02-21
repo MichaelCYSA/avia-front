@@ -4,7 +4,8 @@ export const parse = (data) => {
   const { itineraries, travelerPricings } = data;
   const segmentPriceDetails = travelerPricings[0].fareDetailsBySegment;
   const findClassBySegmentId = (id) =>
-    segmentPriceDetails.find((segment) => segment.id === id)?.class;
+    segmentPriceDetails.find((segment) => segment.segmentId === id)?.class;
+
   const segmentsArray = itineraries
     .map(({ segments }) => {
       return segments.map((segment) => {
@@ -22,7 +23,7 @@ export const parse = (data) => {
     const arrivalTime = moment(segment.arrival.at).format('hmmA').split('M').join('');
 
     return `${segment.flightNumber} ${segment.carrierCode} ${segment.number} ${findClassBySegmentId(
-      findClassBySegmentId(segment.id)
+      segment.id
     )} ${moment(segment.departure.at).format('DDMMM').toUpperCase()} ${moment(
       segment.departure.at
     ).day()} ${segment.departure.iataCode}${
