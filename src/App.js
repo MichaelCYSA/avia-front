@@ -82,10 +82,8 @@ export default App;
 const Iata = ({ flight }) => {
   const handleCopyClick = () => {
     const textArea = document.createElement('textarea');
-    textArea.value = flight.join(
-      `
-      `
-    );
+    textArea.value = flight.join(`--
+    `);
     document.body.appendChild(textArea);
     textArea.select();
     document.execCommand('copy');
