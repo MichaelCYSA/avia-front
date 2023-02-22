@@ -56,7 +56,7 @@ function App() {
                   <Iata flight={parse(flight)} />;
                 </Box>
               </Paper>
-            );
+            )
           })}
           <Box mt={4} display={'flex'} justifyContent={'center'}>
             {error ? (
@@ -82,8 +82,7 @@ export default App;
 const Iata = ({ flight }) => {
   const handleCopyClick = () => {
     const textArea = document.createElement('textarea');
-    textArea.value = flight.join(`--
-    `);
+    textArea.value = flight.join('--');
     document.body.appendChild(textArea);
     textArea.select();
     document.execCommand('copy');
@@ -102,7 +101,7 @@ const Iata = ({ flight }) => {
           <Typography key={iata + index} sx={{ fontSize: 14 }}>
             {iata}
           </Typography>
-        );
+        )
       })}
     </Box>
   );
