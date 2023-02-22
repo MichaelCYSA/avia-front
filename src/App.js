@@ -53,10 +53,10 @@ function App() {
                 </Box>
                 <Divider />
                 <Box display={'flex'} flexDirection={'column'} gap={1} p={1}>
-                  <Iata flight={parse(flight)} />;
+                  <Iata flight={parse(flight)} />
                 </Box>
               </Paper>
-            )
+            );
           })}
           <Box mt={4} display={'flex'} justifyContent={'center'}>
             {error ? (
@@ -101,7 +101,7 @@ const Iata = ({ flight }) => {
           <Typography key={iata + index} sx={{ fontSize: 14 }}>
             {iata}
           </Typography>
-        )
+        );
       })}
     </Box>
   );
